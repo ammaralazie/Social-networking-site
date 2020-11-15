@@ -1,0 +1,56 @@
+
+{% extends 'base.html' %}
+{% block title %}
+profiles invites
+{% endblock title %}
+
+
+{% block content %}
+
+<ul>
+    {% if not qs %}
+    <h1>There is no user currently..</h1>
+        {% endif %}
+    {% for i in qs %}
+        <div class="ui segment" >
+            <div class="ui grid" >
+                <div class="row">
+                    <div class="three wide column">
+                        <img src="{{i.avatar.url}}" class="ui small circular image" alt="">
+                    </div>
+                    <div class="thirteen wide column">
+                       <h3>{{i.user}}</h3> 
+                       <p>{{i.bio}}</p>
+                       <a href="">
+                           <button class="ui primary button w-big mb-5" >See profile</button>
+                       </a>
+                       <!--form 1-->
+                       <form action="{% url 'profiles:accept_inivtation' %}" method="POST">
+                           {% csrf_token %}
+                            <input type="hidden" name="profile_pk"  value={{i.pk}} >
+                            <button class="ui positive basic button w-big mb-5" >
+                                <i class="check icon"></i>
+                                Accept invite
+                            </button>
+                       </form>
+                       <!--end form 1--> 
+                        <!--form2-->
+                        <form action="{% url 'profiles:reject_inivtation' %}" method="POST">
+                            {% csrf_token %}
+                             <input type="hidden" name="profile_pk"  value={{i.pk}} >
+                             <button class="ui negative basic button w-big mb-5" >
+                                 <i class="close icon"></i>
+                                Reject invite
+                                </button>
+                        </form>
+                        <!--end form2-->  
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
+
+

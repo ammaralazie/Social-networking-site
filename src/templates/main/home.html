@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+     Home
+{% endblock title %}
+
+{% block content %}
+{% if not request.user.is_authenticated %}
+    <form action=""  method="POST">
+
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="ui primary button mt-5 w-full" >Signup</button>
+
+    </form>
+    
+    {% endif %}
+{% endblock content %}
+
+{% block scripts %}
+ 
+<script>
+   user ="{{request.user}}"
+   if (user != "AnonymousUser"){
+
+    window.onload=function(){
+        window.open("posts/","_self")
+        }
+
+   }
+
+</script>
+
+{% endblock scripts %}

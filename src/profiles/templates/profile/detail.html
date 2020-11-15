@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile detail
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="ui grid" >
+    <br>
+    <div class="row" >
+       <div class="four wide column">
+        <img  class="ui medium rounded image" src="{{obj.avatar.url}}" alt="">
+        <h1>{{obj.user}}</h1>
+        <div class="ui vertical fluid menu" >
+            <div class="item" >
+                Posts
+                <div class="ui label" >
+                    {{obj.num_post}}
+                </div>
+                
+            </div>  
+            <div class="item" >
+                Likes given
+                <div class="ui label" >
+                    {{obj.get_like_given_num}}
+                </div>  
+            </div> 
+            <div class="item" >
+                Likes received
+                <div class="ui label" >
+                    {{obj.get_like_recive_num}}
+                </div>  
+            </div> 
+            <div class="item" >
+                The freinds
+                <div class="ui label" >
+                    {{obj.number_of_freinds}}
+                </div>  
+            </div> 
+        </div> 
+            
+            {% if obj.user not in rel_resecer and obj.user not in rel_sender %}
+                <form action="{% url 'profiles:send_invatitions' %}" method="POST" >
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{obj.pk}} >
+                    <button class="ui positive basic button" ><i class="plus square icon"></i>Add to friends</button>
+                </form>
+            {% endif %}
+            <!--end form1-->
+            {% if obj.user in rel_resecer and request.user not in obj.friends.all %}
+                <button type="submit" class="ui disabled button" >Wait for a response</button>
+            {% endif %}
+            <!--start form2-->
+            {% if request.user in obj.friends.all %}
+                <form action="{% url 'profiles:remove_friends' %}" method="POST" >
+                {% csrf_token %} 
+                <input type="hidden" name="profile_pk" value={{obj.pk}} >
+                <button type="submit" class="ui negative button" ><i class="minus square icon"></i>Remove your friends</button>
+                </form>
+            {% endif %}
+            <!--end form2-->
+        
+       </div>
+       <div class="twelve wide column">
+          {% if pl.check_post == True %}
+          {% for i in pl.posts %}
+             <div class="ui segment fluid" >{{i.content}}</div>
+          {% endfor %}
+          {% else %}
+          <h1>No posts of this user..</h1>
+          {% endif %}
+           
+       </div> 
+    </div>    
+</div>
+
+{% endblock content %}

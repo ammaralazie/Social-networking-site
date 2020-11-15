@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+    
+{% block title  %}
+    Profile
+{% endblock title  %}
+
+{% block content %}
+<div class="ui modal mymode">
+  <i class="close icon"></i>
+  <div class="header">
+    {{profile.user}} update your profile
+  </div>
+  <div class="image content">
+    <div class="ui medium image">
+      <img src="{{profile.avatar.url}}">
+    </div>
+    <div class="description">
+      <div class="ui header">Profile some addtional /newest about you .</div>
+      <form action="" method="post" class="ui form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit"class="ui positive right labeled icon button">
+          Update
+          <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
+  </div>
+</div>
+      
+        
+  <div  class="ui segment">
+   {% if check%}
+    <div class="ui green message">Youer profile has been updated</div>
+    {% endif %}
+      <h3>MyProfile :{{request.user}}</h3>
+      <div class="ui grid" >
+        <div class="row">
+
+          <div class="six wide column">
+          <img src="{{profile.avatar.url}}" class="ui medium rounded image" alt="">
+        <div class="row mt-5">
+          <br>
+          <button class="ui secondary button" id ="model-btn">Update your profile</button>
+        </div>
+      </div>
+            <div class="ten wide column">
+
+              <table class="ui table">
+
+                <tbody>
+
+                  <tr>
+                    <td>Username</td>
+                    <td>{{profile.user}}</td>
+                  </tr>
+                  <tr>
+                    <td>First Name</td>
+                    <td>{{profile.firstname}}</td>
+                  </tr>
+                  <tr>
+                    <td>Last Name</td>
+                    <td>{{profile.lastname}}</td>
+                  </tr>
+                  <tr>
+                    <td>Bio</td>
+                    <td>{{profile.bio}}</td>
+                  </tr>
+                  <tr>
+                    <td>Number of friends</td>
+                    <td>{{profile.number_of_freinds}}</td>
+                  </tr>
+                  <tr>
+                    <td>Number of friends</td>
+                    <td>
+
+                      <ul>
+
+                          {% for friend in profile.of_freinds %}
+                            <li>{{friend}}</li>
+                          {% endfor %}
+                      </ul>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Number of posts</td>
+                    <td>{{profile.num_post}}</td>
+                  </tr>
+                  <tr>
+                    <td>Number of like given</td>
+                    <td>{{profile.get_like_given_num}}</td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+        </div>
+      </div>
+    </div>
+
+   
+ 
+
+{% endblock content %}

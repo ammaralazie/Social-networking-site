@@ -1,0 +1,49 @@
+body { 
+    background:#F8F9F9 !important;
+}
+.nav {
+    border-radius: 0px !important;
+    padding: 10px 0 10px 0 !important;
+    background-color: #234dbe !important;
+}
+.mb-7{
+    margin-bottom: 7px !important;
+}
+
+.mt-5 {
+    margin-top: 5 !important;
+  }
+
+.mymodel {
+
+    height: 300px !important;
+    top: 200px !important;
+    font-size: 200px !important;
+
+}
+
+.mb-5 {
+
+    margin-bottom: 5px !important;
+
+}
+
+.bwhite-lg {
+
+    background-color: transparent !important;
+
+}
+
+.bwhite-sm {
+
+
+    background-color: transparent !important;
+    width: 10px !important;
+
+}
+
+.comment-box {
+
+    display: none;
+
+}

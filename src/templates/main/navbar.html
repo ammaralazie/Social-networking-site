@@ -1,0 +1,71 @@
+{% url 'profiles:profile_list_view' as allprofiles_url %}
+
+
+<div class="ui inverted menu nav mb-7">
+    <div class="ui container">
+      <a href={% url 'home' %} class={%if request.path == '/'%} "active item" {% else %} "item"{% endif %}>
+          <h3>AmBook</h3>
+      </a>
+      {% if request.user.is_authenticated %}
+      <a href={% url 'post:like_and_commint' %} class={%if request.path == '/posts/'%} "active item" {% else %} "item"{% endif %}>
+          Home
+      </a>
+      {% endif %}
+  
+      <div class="right menu">
+          {% if request.user.is_authenticated %}
+          <div class="item">
+              <div class="ui floating dropdown icon button teal"> Friends
+                  <i class="dropdown icon"></i>
+                  <div class="menu">
+                      <a href={% url 'profiles:profile_list_view' %} class={%if request.path == '/profiles/all_profiles/'%}"active"{% else %} "item" {% endif %}>
+                          All Profiles
+                      </a>
+                      <a href={% url 'profiles:invite_profile_list' %} class={%if request.path == '/profiles/invite_profile/'%}"active"{% else %} "item" {% endif %}>
+                          Send Invites
+                      </a>
+                      <a href={% url 'profiles:invatation_recieved_view' %} class={%if request.path == '/profiles/my_invites/'%}"active"{% else %} "item" {% endif %}>
+                          Received Invites  &nbsp; 
+                          {% if invite_num %}
+                          <div class="ui purple horizontal label" >{{invite_num}}</div>
+                          {% endif %}
+                          
+                      </a>
+                  </div>
+               </div>
+          </div>
+               <div class="item">
+                <form action="" method="GET">
+                  <div class="ui action left icon input">
+                  <input class="prompt" type="text" name='q' placeholder="name of a friend...">
+                  <i class="search icon"></i>
+                  <button type='submit' class="ui button">Search</button>
+                  </div>
+              </form>
+              </div>
+              <a href={% url 'profiles:myprofile' %} class={%if request.path == '/profiles/myprofile/'%} "active item" {% else %} "item"{% endif %}>
+                <img src="{{picture.url}}" class="ui avatar image" alt="">&nbsp;
+                   {{ request.user }}
+              </a>
+  
+              <a href="{% url 'accounts:logout' %}" class="ui item">
+                  Logout
+              </a>
+          {% else %}
+          <a href="{% url 'login' %}" class="ui item">
+                  Login
+              </a>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+  <script>
+console.log('{{request.path}}')
+$(document).ready(function(){
+
+    $('.ui.dropdown').dropdown()
+})
+
+  </script>
+  
+  

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+All Profile
+{% endblock title %}
+
+{% block content %}
+<ul>
+    {% for i in qs %}
+        <li>{{i}}</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

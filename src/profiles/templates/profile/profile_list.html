@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+All Profile
+{% endblock title %}
+
+{% block content %}
+<ul>
+    {% if  not qs %}
+    <div>Sorry there is no user currently</div>
+    {% else %}
+    {% for i in qs %}
+        <div class="ui segment" >
+            <div class="ui grid" >
+                <div class="row" >
+                    <div class="three wide column" >
+                        <img class="ui small circular image" src={{ i.avatar.url}} >   
+                    </div>
+                    <div class="thirteen wide column" >
+                        <h3>{{i.user}}</h3>
+                        <p>{{i.bio}}</p>
+                        <button class="ui primary button" >see profile</button>
+                        <!--start form1-->
+                        {% if i.user not in rel_resecer and i.user not in rel_sender %}
+                            <form action="{% url 'profiles:send_invatitions' %}" method="POST" >
+                                {% csrf_token %}
+                                <input type="hidden" name="profile_pk" value={{i.pk}} >
+                                <button class="ui positive basic button" ><i class="plus square icon"></i>Add to friends</button>
+                            </form>
+                        {% endif %}
+                        <!--end form1-->
+                        {% if i.user in rel_resecer and request.user not in i.friends.all %}
+                            <button type="submit" class="ui disabled button" >Wait for a response</button>
+                        {% endif %}
+                        <!--start form2-->
+                        {% if request.user in i.friends.all %}
+                            <form action="{% url 'profiles:remove_friends' %}" method="POST" >
+                            {% csrf_token %} 
+                            <input type="hidden" name="profile_pk" value={{i.pk}} >
+                            <button type="submit" class="ui negative button" ><i class="minus square icon"></i>Remove your friends</button>
+                            </form>
+                        {% endif %}
+                        <!--end form2-->
+                    </div>
+                </div>
+            </div>
+        </div>
+           
+    {% endfor %}
+    {% endif %}
+</ul>
+{% endblock content %}
